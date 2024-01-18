@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		User savedUser = userRepository.save(newUser);
 		return BankResponse.builder()
 				.responseCode(AccountUtils.ACCOUNT_CREATION_SUCCESS)
-				.responseMessage(AccountUtils.ACCOUNT_EXISTS_MESSAGE)
+				.responseMessage(AccountUtils.ACCOUNT_CREATION_CODE)
 				.accountInfo(AccountInfo.builder()
 						.accountBalance(savedUser.getAccountBalance())
 						.accountNumber(savedUser.getAccountNumber())
