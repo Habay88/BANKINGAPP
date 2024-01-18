@@ -15,7 +15,7 @@ public class AccountInfo {
 
 	private String accountName;
 	
-	private BigDecimal accountNumber;
+	private String accountNumber;
 	
 	private BigDecimal accountBalance;
 }

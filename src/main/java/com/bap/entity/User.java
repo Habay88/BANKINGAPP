@@ -13,15 +13,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 @Entity
 @Table(name="users")
@@ -35,7 +33,7 @@ public class User {
 	private String gender;
 	private String address;
 	private String stateOfOrigin;
-	private BigDecimal accountNumber;
+	private String accountNumber;
 	private BigDecimal accountBalance;
 	private String email;
 	private String phoneNumber;
