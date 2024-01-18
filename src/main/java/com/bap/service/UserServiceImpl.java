@@ -3,6 +3,7 @@ package com.bap.service;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
@@ -11,6 +12,7 @@ import com.bap.entity.User;
 import com.bap.repository.UserRepository;
 import com.bap.utils.AccountUtils;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired

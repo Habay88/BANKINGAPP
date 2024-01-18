@@ -13,7 +13,7 @@ public class AccountUtils {
 		// 2024 + randomsix digits
 		Year currentYear = Year.now();
 		
-		int min = 1000000;
+		int min = 100000;
 		
 		int max = 999999;
 		
