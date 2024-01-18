@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
+import com.bap.dto.EmailDetails;
 import com.bap.dto.UserRequest;
 import com.bap.entity.User;
 import com.bap.repository.UserRepository;
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	EmailService emailService;
 	@Override
 	public BankResponse createAccount(UserRequest userRequest) {
 	// creating an account saving a new user to the db
@@ -46,6 +49,15 @@ public class UserServiceImpl implements UserService {
 				
 				.build();
 		User savedUser = userRepository.save(newUser);
+		// send email alert 
+		EmailDetails emailDetails = EmailDetails.builder()
+				.recipient(savedUser.getEmail())
+				.subject("ACCOUNT CREATION ")
+				.messageBody("Congratulations! Your Account Has been sent successfully created. \n Your Account Details: \n "
+						+ "Account Name: " + savedUser.getFirstName() + " "+ savedUser.getLastName() + " " + savedUser.getOtherName() 
+						+ "\nAccount Number:" + savedUser.getAccountNumber() )
+				.build();
+		emailService.sendEmailAlert(emailDetails);
 		return BankResponse.builder()
 				.responseCode(AccountUtils.ACCOUNT_CREATION_SUCCESS)
 				.responseMessage(AccountUtils.ACCOUNT_CREATION_CODE)
