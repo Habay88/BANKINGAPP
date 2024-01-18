@@ -17,8 +17,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -34,7 +35,7 @@ public class User {
 	private String gender;
 	private String address;
 	private String stateOfOrigin;
-	private String accountNumber;
+	private BigDecimal accountNumber;
 	private BigDecimal accountBalance;
 	private String email;
 	private String phoneNumber;
