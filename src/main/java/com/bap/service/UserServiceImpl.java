@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
+import com.bap.dto.CreditDebitRequest;
 import com.bap.dto.EmailDetails;
 import com.bap.dto.EnquiryRequest;
 import com.bap.dto.UserRequest;
@@ -104,6 +105,21 @@ public class UserServiceImpl implements UserService {
 		User foundUser = userRepository.findByAccountNumber(request.getAccountNumber());
 		
 		return foundUser.getFirstName() + " " + foundUser.getLastName()+ " " + foundUser.getOtherName() ;
+	}
+	@Override
+	public BankResponse creditAccount(CreditDebitRequest cdRequest) {
+		
+		boolean isAccountExist = userRepository.existsByAccountNumber(cdRequest.getAccountNumber());
+		
+		if(!isAccountExist) {
+			return BankResponse.builder()
+					.responseCode(AccountUtils.ACCOUNT_NOT_EXIST_CODE)
+					.responseMessage(AccountUtils.ACCOUNT_NOT_EXIST_MESSAGE)
+					.accountInfo(null)
+					.build();
+		}
+		User userToCredit = userRepository.findByAccountNumber(cdRequest.getAccountNumber());
+		return null;
 	}
 	
 	// balance enquiry , name enquiry, credit the account , debit, transfer

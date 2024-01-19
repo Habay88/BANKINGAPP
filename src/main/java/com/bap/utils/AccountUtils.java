@@ -14,6 +14,9 @@ public class AccountUtils {
 	
 	public static  final  String ACCOUNT_FOUND_CODE = "004";
 	public static  final  String ACCOUNT_FOUND_SUCCESS = "User Account found";
+	
+	public static  final  String ACCOUNT_CREDITED_SUCCESS = "005";
+	public static  final  String ACCOUNT_CREDITED_SUCCESS_MESSAGE = "User Account has been credited successfully";
 	public static String generateAccountNumber() {
 		// 2024 + randomsix digits
 		Year currentYear = Year.now();
