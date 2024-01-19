@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
 import com.bap.dto.EmailDetails;
+import com.bap.dto.EnquiryRequest;
 import com.bap.dto.UserRequest;
 import com.bap.entity.User;
 import com.bap.repository.UserRepository;
@@ -67,6 +68,42 @@ public class UserServiceImpl implements UserService {
 						
 						.build())
 				.build();
+	}
+	@Override
+	public BankResponse balanceEnquiry(EnquiryRequest enquiryRequest) {
+		// check if the account exist 
+		boolean isAccountExist = userRepository.existsByAccountNumber(enquiryRequest.getAccountNumber());
+		if(!isAccountExist) {
+			return BankResponse.builder()
+					.responseCode(AccountUtils.ACCOUNT_NOT_EXIST_CODE)
+					.responseMessage(AccountUtils.ACCOUNT_NOT_EXIST_MESSAGE)
+					.accountInfo(null)
+					.build();
+		}
+		User foundUser = userRepository.findByAccountNumber(enquiryRequest.getAccountNumber());
+		
+		return BankResponse.builder()
+				.responseCode(AccountUtils.ACCOUNT_FOUND_CODE)
+				.responseMessage(AccountUtils.ACCOUNT_FOUND_SUCCESS)
+				.accountInfo(AccountInfo.builder()
+						.accountBalance(foundUser.getAccountBalance())
+						.accountNumber(enquiryRequest.getAccountNumber())
+						.accountName(foundUser.getFirstName() + " "+  foundUser.getLastName()+ " " + foundUser.getOtherName())
+						
+						.build())
+				
+				.build();
+	}
+	@Override
+	public String nameEnquiry(EnquiryRequest request) {
+		// check if the account exist 
+		boolean isAccountExist = userRepository.existsByAccountNumber(request.getAccountNumber());
+		if(!isAccountExist) {
+			return AccountUtils.ACCOUNT_NOT_EXIST_MESSAGE;
+		}
+		User foundUser = userRepository.findByAccountNumber(request.getAccountNumber());
+		
+		return foundUser.getFirstName() + " " + foundUser.getLastName()+ " " + foundUser.getOtherName() ;
 	}
 	
 	// balance enquiry , name enquiry, credit the account , debit, transfer
