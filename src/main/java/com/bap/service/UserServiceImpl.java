@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 			.address(userRequest.getAddress())
 			.stateOfOrigin(userRequest.getStateOfOrigin())
 			.accountNumber(AccountUtils.generateAccountNumber())
-			//.accountNumber(AccountUtils.generateAccountNumber())
 			.accountBalance(BigDecimal.ZERO)
 			.phoneNumber(userRequest.getPhoneNumber())
 			.alternativePhoneNumber(userRequest.getAlternativePhoneNumber())
@@ -69,5 +68,7 @@ public class UserServiceImpl implements UserService {
 						.build())
 				.build();
 	}
+	
+	// balance enquiry , name enquiry, credit the account , debit, transfer
 
 }

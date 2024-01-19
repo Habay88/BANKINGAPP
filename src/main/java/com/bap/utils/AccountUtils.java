@@ -8,7 +8,12 @@ public class AccountUtils {
 	public static  final  String ACCOUNT_EXISTS_MESSAGE = "User already exist ";
 	public static  final  String ACCOUNT_CREATION_SUCCESS = "002";
 	public static  final  String ACCOUNT_CREATION_CODE = "Account has already been created";
-
+	
+	public static  final  String ACCOUNT_NOT_EXIST_CODE = "003";
+	public static  final  String ACCOUNT_NOT_EXIST_MESSAGE = "USER WITH THE PROVIDED ACCOUNT DOES NOT EXIST";
+	
+	public static  final  String ACCOUNT_FOUND_CODE = "004";
+	public static  final  String ACCOUNT_FOUND_SUCCESS = "User Account found";
 	public static String generateAccountNumber() {
 		// 2024 + randomsix digits
 		Year currentYear = Year.now();
