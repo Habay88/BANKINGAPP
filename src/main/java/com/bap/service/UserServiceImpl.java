@@ -131,6 +131,38 @@ public class UserServiceImpl implements UserService {
 						.build())
 				.build();
 	}
+	@Override
+	public BankResponse debitAccount(CreditDebitRequest dbRequest) {
+		// check if the account exist 
+		boolean isAccountExist = userRepository.existsByAccountNumber(dbRequest.getAccountNumber());
+		if(!isAccountExist) {
+			return BankResponse.builder()
+					.responseCode(AccountUtils.ACCOUNT_NOT_EXIST_CODE)
+					.responseMessage(AccountUtils.ACCOUNT_NOT_EXIST_MESSAGE)
+					.accountInfo(null)
+					.build();
+		}
+		//check if the amount you intend to withdraw is not more than what the current ac balance
+		 User userToDebit = userRepository.findByAccountNumber(dbRequest.getAccountNumber());
+		 // convert big decimal to int 
+		 int availableBalance = Integer.parseInt(userToDebit.getAccountBalance().toString());
+		 int debitAmount = Integer.parseInt(dbRequest.getAmount().toString());
+		 if(availableBalance < debitAmount) {
+			 return BankResponse.builder()
+					 .responseCode(AccountUtils.INSUFFICCIENT_BALANCE_CODE)
+					 .responseMessage(AccountUtils.INSUFFICCIENT_BALANCE_MESSAGE)
+					 .accountInfo(null)
+					 .build();
+		 }
+		 else {
+			 userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(dbRequest.getAmount()));
+			 userRepository.save(userToDebit);
+			 return BankResponse.builder()
+					 .responseCode(null)
+					 .build();
+		 }
+		return null;
+	}
 	
 	// balance enquiry , name enquiry, credit the account , debit, transfer
 
