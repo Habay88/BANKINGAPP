@@ -3,6 +3,7 @@ package com.bap.service;
 import com.bap.dto.BankResponse;
 import com.bap.dto.CreditDebitRequest;
 import com.bap.dto.EnquiryRequest;
+import com.bap.dto.TransferRequest;
 import com.bap.dto.UserRequest;
 
 public interface UserService {
@@ -12,4 +13,5 @@ public interface UserService {
 	 String nameEnquiry(EnquiryRequest request);
 	 BankResponse creditAccount(CreditDebitRequest cdRequest);
 	 BankResponse debitAccount(CreditDebitRequest dbRequest);
+	 BankResponse transferCredit(TransferRequest transfer);
 }

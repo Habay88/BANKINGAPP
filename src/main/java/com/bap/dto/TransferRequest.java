@@ -15,5 +15,5 @@ public class TransferRequest {
 
 	private String sourceAccountNumber;
 	private String destinationAccountNumber;
-	private Double amount;
+	private BigDecimal amount;
 }
