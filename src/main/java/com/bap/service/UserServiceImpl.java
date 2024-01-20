@@ -11,6 +11,7 @@ import com.bap.dto.BankResponse;
 import com.bap.dto.CreditDebitRequest;
 import com.bap.dto.EmailDetails;
 import com.bap.dto.EnquiryRequest;
+import com.bap.dto.TransactionDto;
 import com.bap.dto.TransferRequest;
 import com.bap.dto.UserRequest;
 import com.bap.entity.User;
@@ -24,6 +25,8 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	@Autowired
 	EmailService emailService;
+	@Autowired
+	TransactionService transactionService;
 	@Override
 	public BankResponse createAccount(UserRequest userRequest) {
 	// creating an account saving a new user to the db
@@ -120,9 +123,18 @@ public class UserServiceImpl implements UserService {
 					.accountInfo(null)
 					.build();
 		}
+
 		User userToCredit = userRepository.findByAccountNumber(cdRequest.getAccountNumber());
 		userToCredit.setAccountBalance(userToCredit.getAccountBalance().add(cdRequest.getAmount()));
 		userRepository.save(userToCredit);
+		// for transaction records
+		TransactionDto transactionDto = TransactionDto.builder()
+		.accountNumber(userToCredit.getAccountNumber())
+		.transactionType("CREDIT")
+		.amount(cdRequest.getAmount())
+
+		.build();
+		transactionService.saveTransaction(transactionDto);
 		return BankResponse.builder()
 				.responseCode(AccountUtils.ACCOUNT_CREDITED_SUCCESS)
 				.responseMessage(AccountUtils.ACCOUNT_CREDITED_SUCCESS_MESSAGE)
@@ -156,9 +168,18 @@ public class UserServiceImpl implements UserService {
 					 .accountInfo(null)
 					 .build();
 		 }
+		
 		 else {
 			 userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(dbRequest.getAmount()));
 			 userRepository.save(userToDebit);
+			 		  // for transaction records
+		TransactionDto transactionDto = TransactionDto.builder()
+		.accountNumber(userToDebit.getAccountNumber())
+		.transactionType("DEBIT")
+		.amount(dbRequest.getAmount())
+
+		.build();
+		transactionService.saveTransaction(transactionDto);
 			 return BankResponse.builder()
 					 .responseCode(AccountUtils.ACCOUNT_DEBIT_CODE)
 					 .responseMessage(AccountUtils.ACCOUNT_DEBIT_MESSAGE)
@@ -167,7 +188,9 @@ public class UserServiceImpl implements UserService {
 							 .accountName(userToDebit.getFirstName()+ " "+ userToDebit.getLastName()+ " "+ userToDebit.getOtherName())
 							 .accountBalance(userToDebit.getAccountBalance())
 							 .build())
+							 
 					 .build();
+			
 		 }
 		//return null;
 	}
@@ -203,6 +226,14 @@ public class UserServiceImpl implements UserService {
 				
 				.build();
 		emailService.sendEmailAlert(debitAlert); 
+		 // for transaction records
+		 TransactionDto transactionDto = TransactionDto.builder()
+		 .accountNumber(sourceAccountUser.getAccountNumber())
+		 .transactionType("Transfer")
+		 .amount(transfer.getAmount())
+ 
+		 .build();
+		 transactionService.saveTransaction(transactionDto);
 		// debit the account 
 		// get the account to credit 
 		// credit the account
