@@ -19,7 +19,7 @@ public class AccountUtils {
 	public static  final  String ACCOUNT_CREDITED_SUCCESS_MESSAGE = "User Account has been credited successfully";
 	
 	public static  final  String INSUFFICCIENT_BALANCE_CODE = "006";
-	public static  final  String INSUFFICCIENT_BALANCE_MESSAGE = "Insufficient Balance, Hustle";
+	public static  final  String INSUFFICCIENT_BALANCE_MESSAGE = "Insufficient Balance";
 	public static  final  String ACCOUNT_DEBIT_CODE = "007";
 	public static  final  String ACCOUNT_DEBIT_MESSAGE = "Account has been succesfully debited";
 	

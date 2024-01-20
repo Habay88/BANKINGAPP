@@ -1,6 +1,7 @@
 package com.bap.service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -145,9 +146,9 @@ public class UserServiceImpl implements UserService {
 		//check if the amount you intend to withdraw is not more than what the current ac balance
 		 User userToDebit = userRepository.findByAccountNumber(dbRequest.getAccountNumber());
 		 // convert big decimal to int 
-		 int availableBalance = Integer.parseInt(userToDebit.getAccountBalance().toString());
-		 int debitAmount = Integer.parseInt(dbRequest.getAmount().toString());
-		 if(availableBalance < debitAmount) {
+		 BigInteger availableBalance = (userToDebit.getAccountBalance().toBigInteger());
+		 BigInteger debitAmount = dbRequest.getAmount().toBigInteger();
+		 if(availableBalance.intValue() < debitAmount.intValue()) {
 			 return BankResponse.builder()
 					 .responseCode(AccountUtils.INSUFFICCIENT_BALANCE_CODE)
 					 .responseMessage(AccountUtils.INSUFFICCIENT_BALANCE_MESSAGE)
@@ -158,10 +159,16 @@ public class UserServiceImpl implements UserService {
 			 userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(dbRequest.getAmount()));
 			 userRepository.save(userToDebit);
 			 return BankResponse.builder()
-					 .responseCode(null)
+					 .responseCode(AccountUtils.ACCOUNT_DEBIT_CODE)
+					 .responseMessage(AccountUtils.ACCOUNT_DEBIT_MESSAGE)
+					 .accountInfo(AccountInfo.builder()
+							 .accountNumber(dbRequest.getAccountNumber())
+							 .accountName(userToDebit.getFirstName()+ " "+ userToDebit.getLastName()+ " "+ userToDebit.getOtherName())
+							 .accountBalance(userToDebit.getAccountBalance())
+							 .build())
 					 .build();
 		 }
-		return null;
+		//return null;
 	}
 	
 	// balance enquiry , name enquiry, credit the account , debit, transfer
