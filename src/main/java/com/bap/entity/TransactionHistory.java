@@ -3,6 +3,8 @@ package com.bap.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,11 +23,13 @@ import lombok.NoArgsConstructor;
 @Table(name="transactions")
 public class TransactionHistory {
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.UUID)
+	 @GeneratedValue(strategy = GenerationType.UUID)
 private String transactionId;
 private String transactionType;
 private BigDecimal amount;
 private String accountNumber;
 private String status;
+@CreationTimestamp
+private LocalDateTime createdAt;
 	
 }
