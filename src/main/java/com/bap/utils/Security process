@@ -1,0 +1,4 @@
+Add necessary dependency
+Aadd password field to user entity(encrypt the password)
+create four class 3 to handle jwt issues and 1 for security configuration
+add a bean of user detailsservice to handle fetching users by name 

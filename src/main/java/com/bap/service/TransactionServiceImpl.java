@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bap.dto.TransactionDto;
-import com.bap.entity.TransactionHistory;
+import com.bap.entity.Transaction;
+//import com.bap.entity.TransactionHistory;
 import com.bap.repository.TransactionRepository;
 @Service
 public class TransactionServiceImpl  implements TransactionService{
@@ -12,7 +13,7 @@ public class TransactionServiceImpl  implements TransactionService{
  TransactionRepository transactionRepository;
     @Override
     public void saveTransaction(TransactionDto transaction) {
-        TransactionHistory transactionHistory = TransactionHistory.builder()
+        Transaction transactionHistory = Transaction.builder()
         .transactionType(transaction.getTransactionType())
         .accountNumber(transaction.getAccountNumber())
         .amount(transaction.getAmount())

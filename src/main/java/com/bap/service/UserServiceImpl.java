@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bap.dto.AccountInfo;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
 	EmailService emailService;
 	@Autowired
 	TransactionService transactionService;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	@Override
 	public BankResponse createAccount(UserRequest userRequest) {
 	// creating an account saving a new user to the db
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
 			.phoneNumber(userRequest.getPhoneNumber())
 			.alternativePhoneNumber(userRequest.getAlternativePhoneNumber())
 			.email(userRequest.getEmail())
+			.password(userRequest.getPassword())
 			.status("ACTIVE")
 				
 				.build();
