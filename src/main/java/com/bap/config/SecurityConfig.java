@@ -27,7 +27,8 @@ public class SecurityConfig {
 
 		httpSecurity.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(authorize ->
-		authorize.requestMatchers(HttpMethod.POST, "api/user").permitAll().anyRequest().authenticated());
+		authorize.requestMatchers(HttpMethod.POST, "/api/user").permitAll().anyRequest().authenticated());
+		
 		httpSecurity.sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return httpSecurity.build();
 	}

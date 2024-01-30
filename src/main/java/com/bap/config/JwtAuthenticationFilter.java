@@ -13,8 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-    private JwtToskenProvider JwtTokenProvider; 
+// class for generating token
+	
+	
+    private JwtTokenProvider jwtTokenProvider; 
     private UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 			.phoneNumber(userRequest.getPhoneNumber())
 			.alternativePhoneNumber(userRequest.getAlternativePhoneNumber())
 			.email(userRequest.getEmail())
-			.password(userRequest.getPassword())
+			.password(passwordEncoder.encode(userRequest.getPassword()))
 			.status("ACTIVE")
 				
 				.build();
