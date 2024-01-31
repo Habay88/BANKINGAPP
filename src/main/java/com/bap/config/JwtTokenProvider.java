@@ -1,4 +1,4 @@
-package com.bap.config;
+ package com.bap.config;
 
 import java.security.Key;
 import java.util.Date;
@@ -8,7 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -55,7 +58,7 @@ public class JwtTokenProvider {
 			.build()
 			.parse(token);
 			return true;
-		} catch (ExpirationJwtException  | IllegaArgumentException |SignatureException) {
+		} catch (ExpiredJwtException  | IllegalArgumentException |SignatureException | MalformedJwtException e) {
 			throw new RuntimeException(e);
 		} 
 		}
