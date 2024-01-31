@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import com.bap.dto.BankResponse;
 import com.bap.dto.CreditDebitRequest;
 import com.bap.dto.EmailDetails;
 import com.bap.dto.EnquiryRequest;
+import com.bap.dto.LoginDto;
 import com.bap.dto.TransactionDto;
 import com.bap.dto.TransferRequest;
 import com.bap.dto.UserRequest;
@@ -30,6 +34,8 @@ public class UserServiceImpl implements UserService {
 	TransactionService transactionService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	AuthenticationManager authenticationManager;
 	@Override
 	public BankResponse createAccount(UserRequest userRequest) {
 	// creating an account saving a new user to the db
@@ -79,6 +85,20 @@ public class UserServiceImpl implements UserService {
 						.build())
 				.build();
 	}
+	
+	public BankResponse login(LoginDto loginDto){
+		Authentication authentication = null;
+		authentication = authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
+			
+			);
+			EmailDetails loginAlert = EmailDetails.builder()
+			
+			.build();
+		return null;
+
+	} 
+	
 	@Override
 	public BankResponse balanceEnquiry(EnquiryRequest enquiryRequest) {
 		// check if the account exist 
