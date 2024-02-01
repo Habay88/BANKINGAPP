@@ -9,7 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.authentication.*;
 import com.bap.config.JwtTokenProvider;
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
