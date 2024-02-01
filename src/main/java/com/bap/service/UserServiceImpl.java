@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bap.config.JwtTokenProvider;
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
 import com.bap.dto.CreditDebitRequest;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	AuthenticationManager authenticationManager;
+	@Autowired
+	JwtTokenProvider jwtTokenProvider;
+
 	@Override
 	public BankResponse createAccount(UserRequest userRequest) {
 	// creating an account saving a new user to the db
@@ -93,9 +97,15 @@ public class UserServiceImpl implements UserService {
 			
 			);
 			EmailDetails loginAlert = EmailDetails.builder()
-			
+			.subject("You are logged in !")
+			.recipient(loginDto.getEmail())
+			.messageBody("You logged into your account, if you did not initiate this request , please contact your bank")
 			.build();
-		return null;
+			emailService.sendEmailAlert(loginAlert);
+		return BankResponse.builder()
+		.responseCode("Login Success")
+		.responseMessage(jwtTokenProvider.generateToken(authentication))
+		.build();
 
 	} 
 	

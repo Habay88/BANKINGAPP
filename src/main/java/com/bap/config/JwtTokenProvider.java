@@ -24,7 +24,7 @@ public class JwtTokenProvider {
 	@Value("${app.jwt-expiration}")
 	private long jwtExpirationDate;
 	
-	public String generateToken(Authentication authentication) {
+	public String generateToken(org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication authentication) {
 		
 		String username = authentication.getName();
 		Date currentDate = new Date();
