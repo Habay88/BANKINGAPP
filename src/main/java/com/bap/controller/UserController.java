@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bap.dto.BankResponse;
 import com.bap.dto.CreditDebitRequest;
 import com.bap.dto.EnquiryRequest;
+import com.bap.dto.LoginDto;
 import com.bap.dto.TransferRequest;
 import com.bap.dto.UserRequest;
 import com.bap.service.UserService;
@@ -38,6 +39,11 @@ public class UserController {
 	public BankResponse createAccount(@RequestBody UserRequest userRequest) {
 		
 		return userService.createAccount(userRequest);
+	}
+	@PostMapping("/login")
+	public BankResponse login(@RequestBody LoginDto loginDto) {
+		
+		return userService.login(loginDto);
 	}
 	
 	@GetMapping("/balanceEnquiry")
