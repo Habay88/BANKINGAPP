@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }  
           
                 filterChain.doFilter(request, response);
-       // throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
+    // throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
     }
     private String getTokenFromRequest(HttpServletRequest request) {
        
@@ -52,8 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer "))
        return bearerToken.substring(7);
       return null;
-  
-    }
+
+}
    
 
 }

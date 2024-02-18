@@ -9,7 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.authentication.*;
 import com.bap.config.JwtTokenProvider;
 import com.bap.dto.AccountInfo;
 import com.bap.dto.BankResponse;
@@ -98,13 +98,13 @@ public class UserServiceImpl implements UserService {
 			EmailDetails loginAlert = EmailDetails.builder()
 			.subject("You are logged in !")
 			.recipient(loginDto.getEmail())
-			.messageBody("You logged into your account .if you did not initiate this request, please contact your bank !!")
+			.messageBody("You logged into your account, if you did not initiate this request , please contact your bank")
 			.build();
 			emailService.sendEmailAlert(loginAlert);
 		return BankResponse.builder()
-				.responseCode("Login Success")
-				.responseMessage(jwtTokenProvider.generateToken(authentication))
-				.build();
+		.responseCode("Login Success")
+		.responseMessage(jwtTokenProvider.generateToken(authentication))
+		.build();
 
 	} 
 	
